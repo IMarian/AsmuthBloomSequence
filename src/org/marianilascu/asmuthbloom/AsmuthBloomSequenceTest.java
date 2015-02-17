@@ -3,6 +3,7 @@ package org.marianilascu.asmuthbloom;
 import static org.junit.Assert.*;
 
 import java.math.*;
+import java.util.ArrayList;
 
 import org.junit.BeforeClass;
 import org.junit.Ignore;
@@ -14,7 +15,7 @@ public class AsmuthBloomSequenceTest {
 	
 	@BeforeClass
 	public static void createSequence() {
-		asmuthBloomSequence = new AsmuthBloomSequence(12, 4, 8);
+		asmuthBloomSequence = new AsmuthBloomSequence(6, 4, 8);
 		System.out.println("Sequence: ");
 		for(BigInteger item : asmuthBloomSequence.getItems()) {
 			System.out.print("p" + (asmuthBloomSequence.getItems().indexOf(item)) + ": " + item + " ");
@@ -54,29 +55,41 @@ public class AsmuthBloomSequenceTest {
 	}
 	
 	@Test
+	@Ignore
 	public void testN12K4() {
-		assertTrue(asmuthBloomSequence.isAsmuthBloom(12, 4));
+		assertTrue(asmuthBloomSequence.isAsmuthBloom(asmuthBloomSequence.getItems().toArray(), 12, 4));
 		System.out.println("\n");
 	}
 	
 	@Test
 	@Ignore
 	public void testN7K3() {
-		assertTrue(asmuthBloomSequence.isAsmuthBloom(7, 3));
+		assertTrue(asmuthBloomSequence.isAsmuthBloom(asmuthBloomSequence.getItems().toArray(), 7, 3));
 		System.out.println("\n");
 	}
 	
 	@Test
 	@Ignore
 	public void testN3K2() {
-		assertTrue(asmuthBloomSequence.isAsmuthBloom(3, 2));
+		assertTrue(asmuthBloomSequence.isAsmuthBloom(asmuthBloomSequence.getItems().toArray(), 3, 2));
 		System.out.println("\n");
 	}
 	
 	@Test
 	@Ignore
 	public void testN5K4() {
-		assertTrue(asmuthBloomSequence.isAsmuthBloom(5, 4));
+		assertTrue(asmuthBloomSequence.isAsmuthBloom(asmuthBloomSequence.getItems().toArray(), 5, 4));
 		System.out.println("\n");
+	}
+	
+	@Test
+	public void testLevels() {
+		int[] ns = { 3, 4, 5 };
+		int[] ks = { 2, 3, 4 };
+		ArrayList<BigInteger[]> levels = asmuthBloomSequence.generateLevels(ns, ks);
+		
+		for(int i = 0; i < levels.size(); i++) {
+			assertTrue(asmuthBloomSequence.isAsmuthBloom(levels.get(i), ns[i], ks[i]));
+		}
 	}
 }
